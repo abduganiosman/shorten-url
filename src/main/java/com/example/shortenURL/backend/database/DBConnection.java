@@ -1,5 +1,6 @@
 package com.example.shortenURL.backend.database;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -9,12 +10,21 @@ import java.sql.SQLException;
 @Component
 public class DBConnection {
 
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
+
     public Connection getConnection() throws SQLException {
         //Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://aws.connect.psdb.cloud/project?sslMode=VERIFY_IDENTITY",
-                "j0wowssijt19tgh5jwgo",
-                "pscale_pw_7CQjHaRqOow2U9lj5PV1TKbXAExPBFi0zWJQxXNfDpW");
+                dbUrl,
+                dbUsername,
+                dbPassword);
 
         return conn;
     }
